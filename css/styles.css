@@ -1,0 +1,67 @@
+/* Custom Styles */
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+
+html {
+    scroll-padding-top: 80px;
+}
+
+/* Minimalist Capsule Buttons */
+.capsule {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: #f8fafc; /* slate-50 */
+    color: #475569; /* slate-600 */
+    background-color: red;
+    border: 1px solid #e2e8f0; /* slate-200 */
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+}
+.group:hover .capsule {
+    background-color: #f1f5f9; /* slate-100 */
+    border-color: #cbd5e1; /* slate-300 */
+}
+
+/* Project Title Underline Animation */
+.project-title {
+    position: relative;
+    display: inline-block;
+    color: #05080e; /* primary */
+}
+.project-title::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #0f172a; /* primary */
+    transition: width 0.3s ease;
+}
+.group:hover .project-title::after {
+    width: 100%;
+}
