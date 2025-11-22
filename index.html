@@ -46,7 +46,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <!-- Tailwind Config -->
     <script>
@@ -154,49 +154,64 @@
                 
                 <!-- Profile -->
                 <div class="reveal md:col-span-7 bg-white p-8 md:p-10 rounded-3xl border border-slate-100 hover:border-slate-200 transition-all duration-300 shadow-sm hover:shadow-md">
-                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 block">Profile</span>
+                    <span class="text-lg font-bold uppercase tracking-widest text-primary mb-4 block">Profile</span>
                     <h3 class="text-2xl font-bold mb-4 text-primary">About Me</h3>
-                    <p class="text-secondary leading-relaxed mb-4 text-lg">
-                        I am an Analyst at <strong class="text-primary">Effiya Technologies</strong> and a graduate of <strong class="text-primary">IIIT Surat</strong>. 
+                    <p class="text-secondary leading-relaxed mb-4 text-base">
+                        Hi, I am Aditya, an engineer passionate about solving challenging technical problems and building scalable backend systems.
+                    </p>
+                    <p class="text-secondary leading-relaxed mb-4 text-base">
+                        I currently work in the finance and payments domain, where I’ve contributed to real-time fraud detection systems for one of the largest banks in the UAE.
+                        I’m deeply interested in algorithms, backend development, and system design.
                     </p>
                     <p class="text-secondary leading-relaxed text-base">
-                        My expertise lies in bridging the gap between full-stack development and data-driven decision making. I have on-site experience in <strong>Abu Dhabi & Muscat</strong> building high-velocity systems.
+                        Always open to discussing interesting tech problems, learning from other engineers, and collaborating on impactful ideas
                     </p>
                 </div>
 
                 <!-- Stats -->
-                <div class="reveal delay-100 md:col-span-5 bg-primary text-white p-8 md:p-10 rounded-3xl border border-slate-800 flex flex-col justify-between overflow-hidden relative group">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-slate-800 rounded-full blur-3xl translate-x-10 -translate-y-10 group-hover:scale-110 transition-transform duration-700"></div>
+                <div class="reveal delay-100 md:col-span-5 bg-slate-900 text-white p-6 md:p-7 rounded-3xl border border-slate-800 overflow-hidden relative group shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-slate-700/30 rounded-full blur-3xl translate-x-8 -translate-y-8 group-hover:scale-125 transition-transform duration-700"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-slate-700/20 rounded-full blur-2xl -translate-x-6 translate-y-6"></div>
                     
-                    <div>
-                        <span class="text-xs font-bold text-slate-400 mb-1 uppercase tracking-widest block">Problem Solving</span>
-                        <div class="text-6xl font-bold mb-2 group-hover:translate-x-2 transition-transform duration-500">1890</div>
-                        <div class="text-slate-400 text-sm">Max LeetCode Rating</div>
-                    </div>
-                    <div class="mt-8 flex gap-6">
-                        <div>
-                            <div class="text-2xl font-bold">1.1k+</div>
-                            <div class="text-xs text-slate-400">LC Solved</div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="ph ph-code text-xl text-slate-300"></i>
+                            <span class="text-xs font-bold text-slate-300 uppercase tracking-widest">Problem Solving</span>
                         </div>
-                        <div>
-                            <div class="text-2xl font-bold">480+</div>
-                            <div class="text-xs text-slate-400">GFG Solved</div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline gap-2 mb-1">
+                                <div class="text-5xl md:text-6xl font-bold group-hover:scale-105 transition-transform duration-300">1890</div>
+                                
+                            </div>
+                            <div class="text-xs text-slate-400 font-medium">Max LeetCode Rating</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-700/50">
+                            <div class="bg-slate-800/40 backdrop-blur-sm rounded-xl p-3 border border-slate-700/30 hover:bg-slate-800/60 transition-colors">
+                                <div class="text-xl md:text-2xl font-bold mb-1">1100+</div>
+                                <div class="text-xs text-slate-400">LeetCode</div>
+                            </div>
+                            <div class="bg-slate-800/40 backdrop-blur-sm rounded-xl p-3 border border-slate-700/30 hover:bg-slate-800/60 transition-colors">
+                                <div class="text-xl md:text-2xl font-bold mb-1">480+</div>
+                                <div class="text-xs text-slate-400">GeeksforGeeks</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Skills -->
                 <div class="reveal delay-200 md:col-span-12 bg-white p-8 md:p-10 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
-                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-8 block">Technical Arsenal</span>
+                    <span class="text-lg font-bold uppercase tracking-widest text-primary mb-8 block">Technical Arsenal</span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
                         <div>
                             <h4 class="font-semibold text-primary mb-4 text-sm">LANGUAGES</h4>
                             <ul class="space-y-2 text-secondary text-sm">
-                                <li>JavaScript (ES6+)</li>
-                                <li>TypeScript</li>
-                                <li>Python</li>
                                 <li>C / C++</li>
+                                <li>Python</li>
+                                <li>JavaScript</li>
+                                <li>TypeScript</li>
                             </ul>
                         </div>
                         <div>
@@ -212,17 +227,17 @@
                             <h4 class="font-semibold text-primary mb-4 text-sm">BACKEND</h4>
                             <ul class="space-y-2 text-secondary text-sm">
                                 <li>Node.js</li>
+                                <li>Express.js</li>
                                 <li>MongoDB</li>
                                 <li>SQL</li>
-                                <li>Prisma ORM</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-primary mb-4 text-sm">TOOLS</h4>
+                            <h4 class="font-semibold text-primary mb-4 text-sm">OTHERS</h4>
                             <ul class="space-y-2 text-secondary text-sm">
-                                <li>Git & GitHub</li>
-                                <li>WebSocket</li>
-                                <li>Chart.js</li>
+                                <li>Operating Systems</li>
+                                <li>DBMS</li>
+                                <li>OOP</li>
                                 <li>SAS</li>
                             </ul>
                         </div>
@@ -231,20 +246,29 @@
 
                 <!-- Experience -->
                 <div class="reveal delay-300 md:col-span-12 bg-white p-8 md:p-10 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors shadow-sm" id="experience">
-                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-10 block">Experience</span>
+                    <span class="text-lg font-bold uppercase tracking-widest text-primary mb-10 block">Experience</span>
                     
                     <div class="space-y-12 border-l border-slate-200 pl-8 ml-2">
                         <div class="relative group">
                             <div class="absolute -left-[37px] top-1.5 h-4 w-4 bg-white rounded-full border-[3px] border-primary shadow-sm group-hover:scale-125 transition-transform duration-300"></div>
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                                 <h3 class="font-bold text-xl text-primary">Analyst</h3>
-                                <span class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1 rounded-full border border-slate-500">Jul 2024 – Present</span>
+                                <span class="text-xs font-medium text-slate-700 bg-slate-50 px-3 py-1 rounded-full border border-slate-500">Jul 2024 – Present</span>
                             </div>
-                            <p class="text-sm text-slate-500 font-medium mb-4">Effiya Technologies • Ahmedabad • Abu Dhabi • Muscat</p>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                                <p class="text-sm text-slate-500 font-medium"><strong class="text-slate-700">Effiya Technologies</strong></p>
+                                <p class="text-xs text-slate-700 font-medium">Ahmedabad • Abu Dhabi • Muscat</p>
+                            </div>
                             <p class="text-secondary text-sm leading-7 max-w-3xl">
-                                Spearheaded the development of complex rule-based algorithms for real-time payment fraud detection. 
-                                Executed on-site operations in <strong>Abu Dhabi and Muscat</strong> for a major UAE bank. 
-                                Optimized logic to process <strong>400K+ daily transactions</strong> and reduced false positives by 40%.
+                                • Developed and implemented complex algorithms for rules and customer profile logic to enable real-time payment fraud
+detection across multiple banking channels.<br>
+• Worked on-site in Abu Dhabi for one of the largest banks in the UAE, collaborating with technical teams and business
+stakeholders.<br>
+• Optimized fraud rules and profile tracking algorithms to ensure efficient evaluation of <strong>400K+</strong> transactions daily
+(reaching upto <strong>60 TPS</strong>), minimizing performance overhead in real-time processing under high velocity data streams. <br>
+• Designed and built automated workflows using cron to evaluate rule performance, generating actionable reports that led
+to iterative tuning of scoring thresholds and reducing false positives by 40%.
+
                             </p>
                         </div>
 
@@ -252,12 +276,22 @@
                             <div class="absolute -left-[37px] top-1.5 h-4 w-4 bg-white rounded-full border-[3px] border-slate-300 shadow-sm group-hover:border-primary transition-colors duration-300"></div>
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                                 <h3 class="font-bold text-xl text-primary">Analyst Intern</h3>
-                                <span class="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1 rounded-full border border-slate-500">Jan 2024 – Jun 2024</span>
+                                <span class="text-xs font-medium text-slate-700 bg-slate-50 px-3 py-1 rounded-full border border-slate-500">Jan 2024 – Jun 2024</span>
                             </div>
-                            <p class="text-sm text-slate-500 font-medium mb-4">Effiya Technologies</p>
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                                <p class="text-sm text-slate-500 font-medium"><strong class="text-slate-700">Effiya Technologies</strong></p>
+                                <p class="text-xs text-slate-700 font-medium"> Ahmedabad</p>
+                            </div>
                             <p class="text-secondary text-sm leading-7 max-w-3xl">
-                                Analyzed Dynamic Customer Risk Assessment (DCRA) models in production. 
-                                Engineered SQL queries to extract critical metrics, providing insights that guided risk scoring thresholds.
+                                • Conducted thorough analysis on the <strong>
+                                    Dynamic Customer Risk Assessment (DCRA)
+                                </strong>  model in production used for
+                                customer risk scoring.
+                               
+                            </p>
+                            <p class="text-secondary text-sm leading-7 max-w-3xl">
+                                • Wrote SQL based scripts to extract key model impact metrics, generating insights that led to fine-tuning of the model’s
+                                risk thresholds.
                             </p>
                         </div>
                     </div>
@@ -267,74 +301,102 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 px-6">
+    <section id="projects" class="pt-12 pb-24 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="flex items-center justify-between mb-12 reveal">
-                <h2 class="text-3xl font-bold text-primary">Selected Works</h2>
-                <a href="https://github.com/adityajadhav02?tab=repositories" target="_blank" class="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors">
-                    View all <i class="ph ph-arrow-right"></i>
-                </a>
-            </div>
+            <div class="reveal bg-white p-8 md:p-10 rounded-3xl border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
+                <div class="flex items-center justify-between mb-12">
+                    <span class="text-lg font-bold uppercase tracking-widest text-primary block">Selected Works</span>
+                    <a href="https://github.com/adityajadhav02?tab=repositories" target="_blank" class="hidden md:flex items-center gap-2 text-sm font-medium text-primary hover:text-accent transition-colors">
+                        View all <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- Project 1 -->
-                <a href="https://github.com/adityajadhav02/homestay" target="_blank" class="group reveal delay-100 block">
-                    <div class="aspect-[16/10] bg-white rounded-2xl border border-slate-200 overflow-hidden relative mb-5 shadow-sm group-hover:shadow-md transition-all duration-300">
-                        <div class="absolute inset-0 flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors duration-500 group-hover:scale-105 transform">
-                            <i class="ph ph-house-line text-6xl"></i>
+                <div class="group reveal delay-100">
+                    <a href="#" target="_blank" class="block">
+                        <div class="aspect-[16/10] bg-white rounded-2xl border border-slate-200 overflow-hidden relative mb-5 shadow-sm group-hover:shadow-md transition-all duration-300">
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors duration-500 group-hover:scale-105 transform">
+                                <i class="ph ph-house-line text-6xl"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Underline Animation Title -->
+                    <div class="flex items-start justify-between mb-2">
+                        <h3 class="project-title text-lg font-bold text-primary">HomeStay</h3>
+                        <div class="flex items-center gap-3 ml-4">
+                            <a href="https://github.com/adityajadhav02/homestay" target="_blank" class="text-slate-400 hover:text-primary transition-colors duration-300" aria-label="GitHub Repository">
+                                <i class="ph ph-github-logo text-xl"></i>
+                            </a>
+                            <a href="https://homestay02.vercel.app/" target="_blank" class="text-slate-400 hover:text-primary transition-colors duration-300" aria-label="Live Demo">
+                                <i class="ph ph-globe text-xl"></i>
+                            </a>
                         </div>
                     </div>
-                    <!-- Underline Animation Title -->
-                    <h3 class="project-title text-lg font-bold mb-2 text-primary">HomeStay</h3>
                     <p class="text-secondary text-sm mb-4 leading-relaxed">Full-stack booking platform with day-wise pricing and RESTful APIs.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="capsule">Next.js</span>
                         <span class="capsule">Prisma</span>
                         <span class="capsule">MongoDB</span>
                     </div>
-                </a>
+                </div>
 
                 <!-- Project 2 -->
-                <a href="https://github.com/adityajadhav02/ThriftBazaar" target="_blank" class="group reveal delay-200 block">
+                <div class="group reveal delay-200">
                     <div class="aspect-[16/10] bg-white rounded-2xl border border-slate-200 overflow-hidden relative mb-5 shadow-sm group-hover:shadow-md transition-all duration-300">
                         <div class="absolute inset-0 flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors duration-500 group-hover:scale-105 transform">
                             <i class="ph ph-shopping-bag text-6xl"></i>
                         </div>
                     </div>
                     <!-- Underline Animation Title -->
-                    <h3 class="project-title text-lg font-bold mb-2 text-primary">ThriftBazaar</h3>
+                    <div class="flex items-start justify-between mb-2">
+                        <h3 class="project-title text-lg font-bold text-primary">ThriftBazaar</h3>
+                        <div class="flex items-center gap-3 ml-4">
+                            <a href="https://github.com/adityajadhav02/ThriftBazaar" target="_blank" class="text-slate-400 hover:text-primary transition-colors duration-300" aria-label="GitHub Repository">
+                                <i class="ph ph-github-logo text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
                     <p class="text-secondary text-sm mb-4 leading-relaxed">E-commerce platform optimized for seamless transactions.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="capsule">JavaScript</span>
                         <span class="capsule">Full Stack</span>
                     </div>
-                </a>
+                </div>
 
                 <!-- Project 3 -->
-                <a href="https://github.com/adityajadhav02/chat-app" target="_blank" class="group reveal delay-300 block">
+                <div class="group reveal delay-300">
                     <div class="aspect-[16/10] bg-white rounded-2xl border border-slate-200 overflow-hidden relative mb-5 shadow-sm group-hover:shadow-md transition-all duration-300">
                         <div class="absolute inset-0 flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors duration-500 group-hover:scale-105 transform">
                             <i class="ph ph-chat-teardrop-text text-6xl"></i>
                         </div>
                     </div>
                     <!-- Underline Animation Title -->
-                    <h3 class="project-title text-lg font-bold mb-2 text-primary">ChatSpot</h3>
+                    <div class="flex items-start justify-between mb-2">
+                        <h3 class="project-title text-lg font-bold text-primary">ChatSpot</h3>
+                        <div class="flex items-center gap-3 ml-4">
+                            <a href="https://github.com/adityajadhav02/chat-app" target="_blank" class="text-slate-400 hover:text-primary transition-colors duration-300" aria-label="GitHub Repository">
+                                <i class="ph ph-github-logo text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
                     <p class="text-secondary text-sm mb-4 leading-relaxed">Real-time messaging with WebSockets and persistent history.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="capsule">React</span>
                         <span class="capsule">Socket.io</span>
                         <span class="capsule">Node</span>
                     </div>
-                </a>
+                </div>
 
-                <a href="https://github.com/adityajadhav02?tab=repositories" class="md:hidden mt-8 block text-center py-3 rounded-full border border-slate-200 text-sm font-medium hover:bg-slate-50 transition-colors">View All Repositories</a>
+                    <a href="https://github.com/adityajadhav02?tab=repositories" class="md:hidden mt-8 block text-center py-3 rounded-full border border-slate-200 text-sm font-medium hover:bg-slate-50 transition-colors">View All Repositories</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-24 px-6 bg-primary text-white relative overflow-hidden">
+    <section id="contact" class="py-24 px-6 bg-black text-white relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
             
         </div>
