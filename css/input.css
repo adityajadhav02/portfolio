@@ -1,0 +1,583 @@
+/* Source stylesheet — compiled to css/main.css with `npm run build`. */
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "../js";
+/* Words in comments/inline styles that Tailwind would otherwise emit as utilities */
+@source not inline("inline transform transition");
+
+/* ---------- Design tokens ---------- */
+@theme {
+  /* Surfaces */
+  --color-paper: #F7F5F0;        /* page background */
+  --color-paper-2: #FBFAF7;      /* alternate section background */
+  --color-card: #EFEBE2;         /* featured card */
+  /* Text */
+  --color-ink: #1C1B19;          /* headings, dark block background */
+  --color-body: #46433E;         /* body text */
+  --color-muted: #5E5A53;        /* meta; >= 4.5:1 on paper and card */
+  --color-accent: #1F5F5B;       /* deep teal: labels, location lines, status dot, hero italic */
+  /* Rules */
+  --color-line: #E2DED5;         /* hairlines */
+  --color-line-strong: #CFCAC0;  /* button borders, aside rule */
+  --color-highlight: #C3DDD7;    /* .hl marker behind key phrases (ink on it: 12:1) */
+  /* On the dark ink block */
+  --color-on-ink: #F7F5F0;       /* primary text */
+  --color-on-ink-2: #BDB8AE;     /* secondary text */
+  --color-on-ink-3: #9A958B;     /* tertiary text (5.7:1 on ink) */
+  --color-ink-line: #3A3833;     /* rules */
+  --color-ink-underline: #6E6A62;/* email underline */
+
+  /* Fallback faces are metric-matched to cut layout shift on font swap */
+  --font-serif: "Newsreader", "Newsreader Fallback", Georgia, serif;
+  --font-sans: "Instrument Sans", "Instrument Sans Fallback", system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------- Fonts (self-hosted, latin, variable, OFL) ---------- */
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("../fonts/newsreader-roman-400-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/newsreader-italic-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/instrument-sans-latin-var.woff2") format("woff2");
+}
+/* Overrides computed from the woff2 metrics vs. Georgia / Arial (letter-frequency weighted widths) */
+@font-face {
+  font-family: "Newsreader Fallback";
+  font-style: normal;
+  src: local("Georgia");
+  size-adjust: 91.52%;
+  ascent-override: 80.31%;
+  descent-override: 28.96%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Newsreader Fallback";
+  font-style: italic;
+  src: local("Georgia Italic"), local("Georgia-Italic");
+  size-adjust: 82.24%;
+  ascent-override: 89.37%;
+  descent-override: 32.22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Instrument Sans Fallback";
+  font-weight: 400;
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Helvetica");
+  size-adjust: 103.24%;
+  ascent-override: 93.96%;
+  descent-override: 24.22%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Instrument Sans Fallback";
+  font-weight: 700;
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Liberation Sans Bold"), local("Helvetica Bold");
+  size-adjust: 103.24%;
+  ascent-override: 93.96%;
+  descent-override: 24.22%;
+  line-gap-override: 0%;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* 64px sticky header + breathing room */
+  }
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  :where(h1, h2, h3, h4) {
+    color: var(--color-ink);
+  }
+  ::selection {
+    background-color: rgb(31 95 91 / 0.18);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  /* Dark surfaces: paper-coloured ring (accent is too dark on ink) */
+  .surface-ink :focus-visible {
+    outline-color: var(--color-paper);
+  }
+  .surface-ink ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-ink);
+  }
+  @media (width >= 64rem) {
+    html { scroll-padding-top: 6rem; } /* 80px header */
+  }
+}
+
+/* ---------- Components ----------
+   Shared classes:
+   .wrap            container: max 1200px, 24px gutters, 48px at lg
+   .eyebrow         13px / 600 / 0.08em / uppercase / accent label (has a default bottom margin)
+   .h2-serif        section h2: serif 400, 32 → 40 (md) → 48px (lg), tight leading, -0.02em
+   .btn            pill button/link base (50px tall, 15px/500); add one of:
+     .btn-primary   ink filled, paper text
+     .btn-ghost     outlined (line-strong border), ink text
+     .btn-sm / .btn-lg   44px header pill / 52px desktop hero size
+   .pin             on a location icon (<svg class="icon pin">): tints it accent
+   .icon            sizes an inline sprite icon to 1em, stroke = currentColor
+   .icon-btn        44×44 square icon-only button
+   .reveal          fade + 12px rise on scroll (JS adds .is-visible; visible without JS).
+                    Optional stagger: style="--reveal-i: 1" (70ms per step)
+   Collapsible contract (mobile < 48rem only, JS-gated):
+     [data-collapsible][data-open]  wrapper;  .collapsible-body  hidden while data-open="false"
+     .toggle-text     44px underlined text button (Read more / Show less)
+     .toggle-circle   44px round +/− button; holds <use href="#i-plus">, the + becomes − when aria-expanded="true"
+   .surface-ink     dark block helper: paper focus ring + selection
+   Icon sprite ids: i-pin i-plus i-arrow-up-right i-arrow-right i-arrow-up i-menu i-x   →  <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-pin" /></svg>
+   Use the arrow icons rather than ↗ / → characters (the latin font subsets don't include those glyphs).
+*/
+@layer components {
+  /* Layout */
+  .wrap {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Type */
+  .eyebrow {
+    margin-bottom: 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .h2-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  /* Keyword hint in long text — at most one per paragraph / role */
+  .hl {                       /* key phrase: teal marker stroke under the lower half */
+    font-weight: 500;
+    color: var(--color-ink);
+    background-image: linear-gradient(transparent 50%, var(--color-highlight) 50%, var(--color-highlight) 94%, transparent 94%);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding-inline: 0.08em;
+    margin-inline: -0.08em;
+  }
+
+  /* Icons */
+  .icon-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-right: -0.625rem; /* optically align the glyph with the gutter */
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font-size: 1.375rem;
+    cursor: pointer;
+    transition: color 150ms ease;
+  }
+
+  /* Location pin icon */
+  svg.pin {
+    color: var(--color-accent);
+  }
+
+  /* Buttons (pills) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.125rem;
+    padding: 0 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-ghost {
+    border-color: var(--color-line-strong);
+    color: var(--color-ink);
+  }
+  .btn-sm {
+    min-height: 2.75rem;
+    padding: 0 1.25rem;
+  }
+
+  /* Collapsible contract */
+  .toggle-text,
+  .toggle-circle {
+    display: none;
+    cursor: pointer;
+  }
+  .toggle-text {
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
+    transition: color 150ms ease;
+  }
+  .toggle-circle {
+    --plus-t: 200ms;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    padding: 0;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 9999px;
+    background: none;
+    color: var(--color-ink);
+    font-size: 1.125rem;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+  .toggle-circle[aria-expanded="true"] {
+    --plus-v: 0; /* hides the vertical stroke of #i-plus → "−" */
+  }
+  @media (width < 48rem) {
+    .js .toggle-text,
+    .js .toggle-circle {
+      display: inline-flex;
+    }
+    .js [data-collapsible][data-open="false"] .collapsible-body {
+      display: none;
+    }
+    .js [data-collapsible].was-toggled[data-open="true"] .collapsible-body {
+      animation: collapsible-in 200ms var(--ease-out) both;
+    }
+  }
+
+  /* Scroll reveal (hidden state only when JS is running) */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+    transition-delay: calc(var(--reveal-i, 0) * 70ms);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ----- Skip link + header ----- */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 1rem;
+    z-index: 70;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transform: translateY(-200%);
+  }
+  .skip-link:focus {
+    transform: none;
+  }
+  #top-sentinel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 8px;
+    pointer-events: none;
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background-color: var(--color-paper);
+    border-bottom: 1px solid var(--color-line);
+    transition: border-color 200ms ease;
+  }
+  .js .site-header:not(.is-scrolled) {
+    border-bottom-color: transparent;
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    transition: color 150ms ease;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-body);
+    transition: color 150ms ease;
+  }
+  .site-header .btn-ghost {
+    border-color: var(--color-ink);
+  }
+  /* No JS → the menu can't open, so don't offer the toggle (page is one scroll anyway) */
+  html:not(.js) .menu-toggle {
+    display: none;
+  }
+
+  /* ----- Full-screen menu (mobile) ----- */
+  .site-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: var(--color-paper);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms var(--ease-in-out), visibility 0s linear 300ms;
+  }
+  .site-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms var(--ease-in-out);
+  }
+  .site-menu nav li {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+  }
+  .site-menu.is-open nav li {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(60ms + var(--i, 0) * 40ms);
+  }
+  .menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+    padding-block: 0.625rem;
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-serif);
+    font-size: 2.125rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    transition: color 150ms ease;
+  }
+  .menu-link .icon {
+    font-size: 1.375rem;
+    color: var(--color-muted);
+  }
+  .menu-social {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.625rem;
+    transition: color 150ms ease;
+  }
+  html.menu-open {
+    overflow: hidden;
+  }
+
+  /* ----- Hero ----- */
+  .hero-statement {
+    display: block;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    text-wrap: pretty;
+  }
+  .hero-statement em {
+    font-style: italic;
+    color: var(--color-accent);
+  }
+  .hero-in {
+    animation: hero-in 560ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  /* ----- Contact (dark) + footer ----- */
+  .contact-email {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.5rem; /* keeps the link ≥44px tall at phone sizes */
+    border-bottom: 1px solid var(--color-ink-underline);
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 6.2vw, 1.375rem);
+    line-height: 1.3;
+    color: var(--color-on-ink);
+    overflow-wrap: anywhere;
+    transition: border-color 150ms ease;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 3.25rem;
+    border-top: 1px solid var(--color-ink-line);
+    color: var(--color-on-ink);
+  }
+  .contact-link .icon {
+    color: var(--color-on-ink-3);
+    transition: color 150ms ease, transform 150ms ease;
+  }
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    color: var(--color-on-ink-3);
+    transition: color 150ms ease;
+  }
+
+  /* ----- Hover (pointer devices only) ----- */
+  @media (hover: hover) {
+    .btn-primary:hover { background-color: var(--color-accent); }
+    .btn-ghost:hover { border-color: var(--color-ink); }
+    .site-header .btn-ghost:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .logo:hover,
+    .nav-link:hover,
+    .icon-btn:hover,
+    .menu-link:hover,
+    .menu-social:hover,
+    .toggle-text:hover { color: var(--color-accent); }
+    .toggle-circle:hover { border-color: var(--color-ink); }
+    .contact-email:hover { border-color: var(--color-on-ink); }
+    .contact-link:hover .icon { color: var(--color-on-ink); transform: translate(2px, -2px); }
+    .back-to-top:hover { color: var(--color-on-ink); }
+  }
+
+  /* ----- Larger screens ----- */
+  @media (width >= 48rem) {
+    .h2-serif { font-size: 2.5rem; line-height: 1.12; }
+    .hero-statement { font-size: 3.5rem; line-height: 1.05; }
+    .contact-email { font-size: 1.75rem; }
+  }
+  @media (width >= 64rem) {
+    .wrap { padding-inline: 3rem; }
+    .eyebrow { margin-bottom: 0.875rem; }
+    .h2-serif { font-size: 3rem; line-height: 1.1; }
+    .logo { font-size: 1.375rem; }
+    .btn-lg { min-height: 3.25rem; padding: 0 1.75rem; font-size: 1rem; }
+    .hero-statement { font-size: 4.75rem; line-height: 1.04; letter-spacing: -0.025em; }
+    .contact-email { margin-top: 2rem; padding-bottom: 0.5rem; font-size: 2.25rem; }
+    .contact-link { justify-content: space-between; min-height: 3.5rem; }
+  }
+  @media (width < 22.5rem) {
+    .hero-statement { font-size: 2.25rem; }
+  }
+}
+
+/* ---------- Motion ---------- */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+@keyframes collapsible-in {
+  from { opacity: 0; transform: translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+  .js .reveal,
+  .site-menu nav li {
+    opacity: 1;
+    transform: none;
+  }
+  .btn:active { transform: none; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  @page { margin: 16mm; }
+  html, body { background: #fff !important; color: #000; }
+  .site-header, .site-menu, .skip-link, .toggle-text, .toggle-circle, .back-to-top, #top-sentinel { display: none !important; }
+  .collapsible-body { display: block !important; }
+  .reveal, .hero-in { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .bg-paper-2, .bg-card, .surface-ink { background: #fff !important; }
+  .surface-ink, .surface-ink * { color: #000 !important; border-color: #ccc !important; }
+  #contact a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+  h2, h3 { break-after: avoid; }
+  li, article { break-inside: avoid; }
+}
